@@ -104,11 +104,9 @@ function attach_wss(server){
 					let { response, stalled_request_id } = msg;
 
 
-					console.log(response, stalled_request_id)
 
 					let stalled_request = stalled_requests.get(stalled_request_id);
 
-					console.log(stalled_request)
 
 
 					stalled_request.statusMessage = response.statusText ? response.statusText : ""

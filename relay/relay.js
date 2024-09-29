@@ -26,7 +26,6 @@ relay_router.post("/deploy/:host_id", async (req, res) => {
 	try {
 		let { repo }  = req.body
 
-		console.log(req.body)
 
 		let host = connected_hosts.get(req.params.host_id);
 
