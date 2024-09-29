@@ -1,0 +1,69 @@
+<html>
+
+	<head>
+		<title>Depl.Server - Login</title>
+
+		<meta name="viewport" content="width=device-width, initial-scale=1">	
+
+		<script src="https://cdn.tailwindcss.com"></script>	
+
+		<script src="/scripts/check_cookies.js"></script>
+
+		<script>
+			check_session_cookie(false)
+
+		</script>
+
+	</head>
+
+	<body>
+		<div class="flex flex-col w-[300px] gap-4 border-2">
+		<label for="">repo name</label>
+		<input type="text" id="repo_name" class="border-2">	
+		<label for=""> host_name</label>
+		<input type="text" id="host_name" class="border-2">
+		<button onclick="deploy()">deploy</button>	
+		<button onclick="show_logs()">show logs</button>
+	
+		</div>
+
+		<div id="logs">
+
+		</div>
+	</body>
+
+
+	<script>
+
+
+		async function deploy() {
+			let repo_name = document.getElementById("repo_name").value
+			let host_name = document.getElementById("host_name").value
+			let response = await fetch("/deploy/" + host_name,  {
+				method : "POST",
+				body : JSON.stringify({
+					repo : repo_name
+				}),
+				headers : {
+					"Content-Type": "application/json",
+
+				}
+			}).then(res => res.text())
+
+		}	
+
+		async function show_logs(){
+			let host_name = document.getElementById("host_name").value;
+
+			let logs = await fetch("/logs/" + host_name, {
+				method : "POST"
+			}).then(res => res.text())
+
+
+			document.getElementById("logs").innerHTML = logs
+
+		}
+
+	</script>
+
+</html>

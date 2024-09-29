@@ -1,0 +1,61 @@
+<html>
+
+	<head>
+		<title>Depl.Server - Login</title>
+
+		<meta name="viewport" content="width=device-width, initial-scale=1">	
+
+		<script src="https://cdn.tailwindcss.com"></script>	
+
+		<script src="/scripts/check_cookies.js"></script>
+
+		<script>
+			check_session_cookie(true)
+		</script>
+	</head>
+
+
+	<body>
+		
+		<div class="flex flex-col gap-4">
+
+			<input type="text" id="username" class="border-2">
+			<input  type="password" id="password" class="border-2">
+
+
+			<button onclick="login()">login</button>
+		</div>
+				
+
+	</body>
+
+
+
+	<script>
+	
+
+		async function login(){
+			let username = document.getElementById("username").value;
+			let password = document.getElementById("password").value;
+			let response = await fetch("/login/password", {
+				method : "POST",
+				headers : {
+					"Content-Type" : "application/json"
+				},
+				body : JSON.stringify({
+					username, password
+				})
+			}).then(res => res.json())
+
+
+			if(response.error){
+				alert(response.error)
+			} else {
+				window.location.href = "/home"
+			}
+
+		}
+
+	</script>
+
+</html>
